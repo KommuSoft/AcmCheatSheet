@@ -1,14 +1,64 @@
 \documentclass{article}
 \usepackage[cm]{fullpage}
-\usepackage{fancyhdr}
+\usepackage{fancyhdr,brackets,algorithmicx,algorithm2e,algpseudocode}
 \pagestyle{fancy}
-\renewcommand\headheight{12pt}
+\renewcommand\headheight{24pt}
 \input{details.tex}
 \lhead{\auth}
 \rhead{\inst}
 \cfoot{center of the footer!}
-\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrulewidth}{0.8pt}
 \renewcommand{\footrulewidth}{0.4pt}
+
+\SetKwData{Vertices}{vertices}
+\SetKwData{Edges}{edges}
+\SetKwData{Source}{source}
+\SetKwData{Weight}{weight}
+\SetKwData{Distance}{distance}
+\SetKwData{U}{u}
+\SetKwData{V}{v}
+\SetKwData{Predecessor}{predecessor}
+\SetKwData{Null}{null}
+
+\SetKwFunction{BellmanFord}{BellmanFord}
+\SetKwFunction{Error}{error}
+
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+
+
+
+\newcommand{\forcond}{$i=0$ \KwTo $n$}
 \begin{document}
-A
+\section{Graph algorithms}
+\begin{algorithm}[H]
+\BellmanFord{\Vertices,\Edges,\Source}{
+  \For{$\V\in\Vertices$}{
+    $\Distance[\V]\gets\infty$\;
+    $\Predecessor[\V]\gets\Null$\;
+  }
+  $\Distance[\Source]\gets 0$\;
+  \For{$i\leftarrow 1$ \KwTo $\abs{\Vertices}-1$}{
+    \For{$\tupl{\U,\V,\Weight}\in\Edges$}{
+      \If{$\Distance[\U]+\Weight <\Distance[\V]$}{
+	$\Distance[\V]\gets\Distance[\U]+\Weight$\;
+	$\Predecessor[\V]\gets\U$\;
+      }
+    }
+  }
+  \For{$\tupl{\U,\V,\Weight}\in\Edges$}{
+    \If{$\Distance[\U]+\Weight < \Distance[\V]$}{
+      \Error{"Graph negative-weight cycles contains a negative-weight cycle"}
+    }
+  }
+}
+\end{algorithm}
+% \begin{algorithmic}
+% % \Function{BellmanFord}{list vertices, list edges, vertex source}
+% % \State $d_i\gets\infty$
+% % \EndFunction
+% \Function{Increment}{$a$}
+%     \State $a \gets a+1$
+%     \State \Return $a$
+% \EndFunction
+% \end{algorithmic}
 \end{document}
