@@ -30,3 +30,9 @@
 *.vrb
 *.xdy
 *.tdo
+*.aux
+*.log
+*.pdf
+*.*~*
+*.backup
+details.tex
